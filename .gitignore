@@ -1,0 +1,30 @@
+# Compiled Java bytecode
+*.class
+
+# Build output
+bin/
+out/
+build/
+target/
+
+# Local runtime folders
+uploads/
+downloads/
+
+# IDE settings
+.vscode/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
