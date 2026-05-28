@@ -1,4 +1,4 @@
-# 🎓 Campus File Sharing System
+#  File Sharing System
 
 A **distributed file-sharing application** built with Java, JavaFX, MySQL, and RMI. Perfect for a campus environment where students can securely upload, download, and share files with each other.
 
