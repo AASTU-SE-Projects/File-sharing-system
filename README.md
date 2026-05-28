@@ -1,5 +1,24 @@
 #  File Sharing System
 
+## 👨‍💻 Group Members
+
+<p align="center">
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=0&color=1E90FF&center=true&vCenter=true&width=500&lines=Dawit+Lulie" />
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=0&color=FF8C00&center=true&vCenter=true&width=500&lines=Hayat+Zeynu" />
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=0&color=8A2BE2&center=true&vCenter=true&width=500&lines=Haset+Tesfaye" />
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=0&color=32CD32&center=true&vCenter=true&width=500&lines=Emran+Seid" />
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=0&color=FF1493&center=true&vCenter=true&width=500&lines=Hayat+Musema" />
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=0&color=00CED1&center=true&vCenter=true&width=500&lines=Hayat+Khayradin" />
+
+</p>
+
+
 A **distributed file-sharing application** built with Java, JavaFX, MySQL, and RMI. Perfect for a campus environment where students can securely upload, download, and share files with each other.
 
 ---
