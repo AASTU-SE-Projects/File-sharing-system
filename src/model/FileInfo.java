@@ -7,14 +7,14 @@ public class FileInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
-    private String filename; // Original filename (e.g., notes.pdf)
-    private String storedFilename; // UUID-based stored name (e.g., 550e8400_notes.pdf)
-    private String filepath; // Network or local path to actual file
+    private String filename; 
+    private String storedFilename; 
+    private String filepath; 
     private long filesize;
     private int uploadedBy;
     private Timestamp uploadDate;
 
-    // Constructors
+    
     public FileInfo() {
     }
 
@@ -38,7 +38,7 @@ public class FileInfo implements Serializable {
         this.uploadDate = uploadDate;
     }
 
-    // Getters and Setters
+    
     public int getId() {
         return id;
     }
