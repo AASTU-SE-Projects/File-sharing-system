@@ -1,3 +1,4 @@
+package main.java.ui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -5,8 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import dao.FileDAO;
-import model.FileInfo;
+import main.java.dao.FileDAO;
+import main.java.model.FileInfo;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;

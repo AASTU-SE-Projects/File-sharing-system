@@ -1,6 +1,6 @@
-package dao;
+package main.java.dao;
 
-import model.FileInfo;
+import main.java.model.FileInfo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

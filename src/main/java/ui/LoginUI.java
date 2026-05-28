@@ -1,4 +1,5 @@
-import dao.UserDAO;
+package main.java.ui;
+import main.java.dao.UserDAO;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,7 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.User;
+import main.java.model.User;
 
 public class LoginUI extends Application {
 
