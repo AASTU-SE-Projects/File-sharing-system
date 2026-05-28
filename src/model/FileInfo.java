@@ -1,11 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class FileInfo {
+public class FileInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
-    private String filename;
-    private String filepath;
+    private String filename; // Original filename (e.g., notes.pdf)
+    private String storedFilename; // UUID-based stored name (e.g., 550e8400_notes.pdf)
+    private String filepath; // Network or local path to actual file
     private long filesize;
     private int uploadedBy;
     private Timestamp uploadDate;
@@ -17,6 +21,17 @@ public class FileInfo {
     public FileInfo(int id, String filename, String filepath, long filesize, int uploadedBy, Timestamp uploadDate) {
         this.id = id;
         this.filename = filename;
+        this.filepath = filepath;
+        this.filesize = filesize;
+        this.uploadedBy = uploadedBy;
+        this.uploadDate = uploadDate;
+    }
+
+    public FileInfo(int id, String filename, String storedFilename, String filepath, long filesize, int uploadedBy,
+            Timestamp uploadDate) {
+        this.id = id;
+        this.filename = filename;
+        this.storedFilename = storedFilename;
         this.filepath = filepath;
         this.filesize = filesize;
         this.uploadedBy = uploadedBy;
@@ -38,6 +53,14 @@ public class FileInfo {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getStoredFilename() {
+        return storedFilename;
+    }
+
+    public void setStoredFilename(String storedFilename) {
+        this.storedFilename = storedFilename;
     }
 
     public String getFilepath() {

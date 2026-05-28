@@ -1,33 +1,22 @@
 import dao.UserDAO;
 import javafx.animation.FadeTransition;
-import javafx.concurrent.Task;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.FileDownload;
 import model.User;
-import dao.FileDAO;
 import rmi.RMIClient;
-import rmi.FileServiceRemote;
 import rmi.UserServiceRemote;
 import util.LaunchMode;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class LoginUI extends Application {
 
@@ -105,20 +94,12 @@ public class LoginUI extends Application {
         registerButton.setStyle("-fx-background-color: #edf3f9; -fx-text-fill: #204d74;"
                 + "-fx-font-size: 13px; -fx-font-weight: 600; -fx-background-radius: 10; -fx-cursor: hand;");
 
-        Button downloadTokenButton = new Button("📥 Download by Share Token");
-        downloadTokenButton.setMaxWidth(Double.MAX_VALUE);
-        downloadTokenButton.setPrefHeight(40);
-        downloadTokenButton.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white;"
-                + "-fx-font-size: 13px; -fx-font-weight: 700; -fx-background-radius: 10; -fx-cursor: hand;");
-
-        Separator separator = new Separator();
-
         Label statusLabel = new Label();
         statusLabel.setWrapText(true);
         statusLabel.setStyle("-fx-text-fill: #b02a37; -fx-font-size: 12px;");
 
         VBox layout = new VBox(10, miniHeading, title, subtitle, helperText, emailField, passwordField, loginButton,
-                registerButton, statusLabel, separator, downloadTokenButton);
+                registerButton, statusLabel);
         layout.setAlignment(Pos.CENTER_LEFT);
         card.getChildren().add(layout);
         root.getChildren().add(card);
@@ -141,9 +122,7 @@ public class LoginUI extends Application {
             new RegisterUI().start(new Stage());
         });
 
-        downloadTokenButton.setOnAction(e -> openTokenDownloadDialog());
-
-        Scene scene = new Scene(root, 560, 680);
+        Scene scene = new Scene(root, 560, 520);
         primaryStage.setTitle((launchMode == LaunchMode.SERVER ? "Server" : "Client") + " Login - Campus File Sharing");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -206,148 +185,6 @@ public class LoginUI extends Application {
             statusLabel.setStyle("-fx-text-fill: red; -fx-font-size: 13px;");
             statusLabel.setText("Login failed: " + ex.getMessage());
         }
-    }
-
-    private void openTokenDownloadDialog() {
-        Stage downloadWindow = new Stage();
-        downloadWindow.setTitle("Download Shared File");
-        downloadWindow.setWidth(550);
-        downloadWindow.setHeight(400);
-
-        VBox layout = new VBox(15);
-        layout.setPadding(new Insets(25));
-
-        Label titleLabel = new Label("Download Shared File");
-        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
-
-        Label instructionsLabel = new Label(
-                "Enter the share token you received to download a file.\nNo login required!");
-        instructionsLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #7f8c8d;");
-        instructionsLabel.setWrapText(true);
-
-        Separator sep1 = new Separator();
-
-        Label tokenLabel = new Label("Share Token:");
-        tokenLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
-
-        TextField tokenField = new TextField();
-        tokenField.setPromptText("Paste your share token here...");
-        tokenField.setPrefHeight(40);
-        tokenField.setStyle("-fx-font-size: 13px; -fx-padding: 10px;");
-
-        Label statusLabel = new Label();
-        statusLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #7f8c8d;");
-        statusLabel.setWrapText(true);
-
-        Separator sep2 = new Separator();
-
-        Button downloadBtn = new Button("📥 Download File");
-        downloadBtn.setPrefWidth(150);
-        downloadBtn.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; "
-                + "-fx-font-size: 14px; -fx-padding: 10px; -fx-cursor: hand;");
-
-        Button cancelBtn = new Button("Cancel");
-        cancelBtn.setPrefWidth(100);
-        cancelBtn.setStyle("-fx-background-color: #95a5a6; -fx-text-fill: white; "
-                + "-fx-font-size: 14px; -fx-padding: 10px; -fx-cursor: hand;");
-
-        HBox buttonBox = new HBox(10);
-        buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.getChildren().addAll(downloadBtn, cancelBtn);
-
-        cancelBtn.setOnAction(e -> downloadWindow.close());
-        downloadBtn.setOnAction(e -> handleTokenDownload(tokenField, statusLabel, downloadBtn));
-
-        layout.getChildren().addAll(titleLabel, instructionsLabel, sep1, tokenLabel, tokenField, statusLabel, sep2,
-                buttonBox);
-
-        Scene scene = new Scene(layout);
-        downloadWindow.setScene(scene);
-        downloadWindow.show();
-    }
-
-    private void handleTokenDownload(TextField tokenField, Label statusLabel, Button downloadBtn) {
-        String token = tokenField.getText().trim();
-
-        if (token.isEmpty()) {
-            statusLabel.setStyle("-fx-text-fill: #e74c3c;");
-            statusLabel.setText("❌ Please enter a token!");
-            return;
-        }
-
-        downloadBtn.setDisable(true);
-        statusLabel.setStyle("-fx-text-fill: #3498db;");
-        statusLabel.setText("🔄 Verifying token...");
-
-        Task<FileDownload> downloadTask = new Task<>() {
-            @Override
-            protected FileDownload call() throws Exception {
-                try {
-                    System.out.println("📡 Trying RMI connection...");
-                    RMIClient.initialize();
-                    FileServiceRemote fileService = RMIClient.getFileService();
-                    if (fileService != null && RMIClient.isConnected()) {
-                        return fileService.downloadFileByShareToken(token);
-                    }
-                } catch (Exception rmiException) {
-                    System.out.println("💾 RMI failed, using local mode...");
-                }
-
-                FileDAO fileDAO = new FileDAO();
-                return fileDAO.downloadFileByShareToken(token);
-            }
-        };
-
-        downloadTask.setOnSucceeded(event -> {
-            FileDownload result = downloadTask.getValue();
-
-            if (result != null && result.getData() != null) {
-                try {
-                    Path downloadDir = Paths.get("downloads");
-                    Files.createDirectories(downloadDir);
-
-                    Path filePath = downloadDir.resolve(result.getFilename());
-                    Files.write(filePath, result.getData());
-
-                    System.out.println("✅ File saved: " + filePath.toAbsolutePath());
-
-                    statusLabel.setStyle("-fx-text-fill: #27ae60;");
-                    statusLabel.setText("✅ Download successful! File: downloads/" + result.getFilename());
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText("File Downloaded!");
-                    alert.setContentText("File saved to: downloads/" + result.getFilename() + "\n\n"
-                            + "You can now open and use the file.");
-                    alert.showAndWait();
-                } catch (IOException ioException) {
-                    System.err.println("❌ Error saving file: " + ioException.getMessage());
-                    statusLabel.setStyle("-fx-text-fill: #e74c3c;");
-                    statusLabel.setText("❌ Error saving file: " + ioException.getMessage());
-                } finally {
-                    downloadBtn.setDisable(false);
-                }
-            } else {
-                System.err.println("❌ File download returned null!");
-                statusLabel.setStyle("-fx-text-fill: #e74c3c;");
-                statusLabel.setText("❌ Token not found or invalid!");
-                downloadBtn.setDisable(false);
-            }
-        });
-
-        downloadTask.setOnFailed(event -> {
-            Throwable exception = downloadTask.getException();
-            System.err.println("❌ Download failed: " + exception.getMessage());
-            exception.printStackTrace();
-
-            statusLabel.setStyle("-fx-text-fill: #e74c3c;");
-            statusLabel.setText("❌ Download failed: " + exception.getMessage());
-            downloadBtn.setDisable(false);
-        });
-
-        Thread downloadThread = new Thread(downloadTask, "token-download-thread");
-        downloadThread.setDaemon(true);
-        downloadThread.start();
     }
 
     public static void main(String[] args) {

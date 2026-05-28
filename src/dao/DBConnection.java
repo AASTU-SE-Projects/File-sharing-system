@@ -1,5 +1,6 @@
 package dao;
 
+import util.AppConfig;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -10,9 +11,9 @@ public class DBConnection {
         try {
 
             Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/campus_share",
-                    "root",
-                    "YUTI");
+                    AppConfig.getDbUrl(),
+                    AppConfig.getDbUser(),
+                    AppConfig.getDbPassword());
 
             System.out.println("Database Connected");
 
