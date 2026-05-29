@@ -124,13 +124,13 @@ Edit `src/util/AppConfig.java`:
 ```java
 // Database credentials
 private static final String DEFAULT_DB_USER = "root";      // Your MySQL user
-private static final String DEFAULT_DB_PASSWORD = "YUTI";   // Your MySQL password
+private static final String DEFAULT_DB_PASSWORD = "****";   // Your MySQL password
 ```
 
 Or set environment variables:
 ```bash
 set CAMPUS_SHARE_DB_USER=root
-set CAMPUS_SHARE_DB_PASSWORD=YUTI
+set CAMPUS_SHARE_DB_PASSWORD=****
 ```
 
 ### 3️⃣ Compile the Project
@@ -627,7 +627,7 @@ This is an educational project created for learning purposes.
 Created as a demonstration of enterprise Java development concepts.
 
 **Project Type:** Educational  
-**Target Audience:** Computer Science Students  
+**Target Audience:** Software Enginnering Students  
 **Skill Level:** Intermediate to Advanced  
 
 ---
