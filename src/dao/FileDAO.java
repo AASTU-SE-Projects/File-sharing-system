@@ -10,7 +10,7 @@ import java.util.List;
 
 public class FileDAO {
 
-```
+
 // Prevent repeated checking of share_token column
 private static boolean shareTokenColumnChecked = false;
 
@@ -399,6 +399,5 @@ private void ensureStoredFilenameColumn(Connection conn) throws SQLException {
 
     storedFilenameColumnChecked = true;
 }
-```
 
 }
