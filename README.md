@@ -124,7 +124,7 @@ Edit `src/util/AppConfig.java`:
 ```java
 // Database credentials
 private static final String DEFAULT_DB_USER = "root";      // Your MySQL user
-private static final String DEFAULT_DB_PASSWORD = "YUTI";   // Your MySQL password
+private static final String DEFAULT_DB_PASSWORD = "****";   // Your MySQL password
 ```
 
 Or set environment variables:
