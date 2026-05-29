@@ -52,6 +52,7 @@ public class UserDAO {
     public boolean register(String username, String email, String password) {
         String sql = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
 
+
         try (Connection conn = DBConnection.connect();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -69,6 +70,7 @@ public class UserDAO {
         }
         return false;
     }
+
 
     public boolean registerUser(String username, String email, String password) {
         return register(username, email, password);
@@ -116,6 +118,7 @@ public class UserDAO {
                 return user;
             }
 
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
