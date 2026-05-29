@@ -130,7 +130,7 @@ private static final String DEFAULT_DB_PASSWORD = "****";   // Your MySQL passwo
 Or set environment variables:
 ```bash
 set CAMPUS_SHARE_DB_USER=root
-set CAMPUS_SHARE_DB_PASSWORD=YUTI
+set CAMPUS_SHARE_DB_PASSWORD=****
 ```
 
 ### 3️⃣ Compile the Project
