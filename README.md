@@ -627,7 +627,7 @@ This is an educational project created for learning purposes.
 Created as a demonstration of enterprise Java development concepts.
 
 **Project Type:** Educational  
-**Target Audience:** Computer Science Students  
+**Target Audience:** Software Enginnering Students  
 **Skill Level:** Intermediate to Advanced  
 
 ---
